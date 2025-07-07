@@ -55,16 +55,24 @@
                                 <li><a href="./index.html">Homepage</a></li>
                                 <li><a href="./categories.html">Categories <span class="arrow_carrot-down"></span></a>
                                     <ul class="dropdown">
-                                        <li><a href="./categories.html">Categories</a></li>
-                                        <li><a href="./anime-details.html">Anime Details</a></li>
-                                        <li><a href="./anime-watching.html">Anime Watching</a></li>
-                                        <li><a href="./blog-details.html">Blog Details</a></li>
-                                        <li><a href="./signup.html">Sign Up</a></li>
-                                        <li><a href="./login.html">Login</a></li>
+                                        <li><a href="./categories.html">Magic</a></li>
+                                        <li><a href="./categories.html">Drama</a></li>
+                                        <li><a href="./categories.html">Adventure</a></li>
+                                        <li><a href="./categories.html">Action</a></li>
+                                        <li><a href="./categories.html">Romance</a></li>
+                                        <li><a href="./categories.html">Horror</a></li>
+                                        <li><a href="./categories.html">Comedy</a></li>
+                                        <li><a href="./categories.html">Sci-Fi</a></li>
+                                        <li><a href="./categories.html">Mystery</a></li>
+                                        <li><a href="./categories.html">Fantasy</a></li>
+                                        <li><a href="./categories.html">Supernatural</a></li>
+                                        <li><a href="./categories.html">Thriller</a></li>
+                                        <li><a href="./categories.html">Historical</a></li>
+                                        <li><a href="./categories.html">Sports</a></li>
+                                        
                                     </ul>
                                 </li>
-                                <li><a href="./blog.html">Our Blog</a></li>
-                                <li><a href="#">Contacts</a></li>
+                               
                             </ul>
                         </nav>
                     </div>
