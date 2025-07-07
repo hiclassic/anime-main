@@ -1,6 +1,6 @@
 <?php
 
- define ("APPURL", "http://localhost:8080/anime-main");
+ define ("APPURL", "http://localhost/anime-main");
 
 ?><!DOCTYPE html>
 <html lang="zxx">
