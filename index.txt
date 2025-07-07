@@ -1,0 +1,249 @@
+✅ require "includes/header.php";
+এই লাইনের মাধ্যমে header.php ফাইল ইনক্লুড করা হয়েছে, যেখানে <head>, মেনু, সিএসএস ফাইল, ও ওপেনিং <body> রয়েছে।
+
+✅ Hero Section:
+html
+Copy code
+<section class="hero">...</section>
+🔹 এই সেকশনটি হলো homepage-এর উপরভাগের slider/banner।
+
+owl-carousel ক্লাসটি Owl Carousel JS লাইব্রেরি ব্যবহার করে স্লাইডিং ইফেক্ট দেয়।
+
+data-setbg="img/hero/hero-1.jpg" – এইভাবে ব্যাকগ্রাউন্ড ইমেজ বসানো হয়েছে (JS দ্বারা প্রয়োগ হয়)।
+
+প্রতিটি .hero__items হলো একটি স্লাইড।
+
+label, h2, p, এবং <a href> দিয়ে শো-এর নাম, বিবরণ ও ওয়াচ লিংক দেওয়া হয়েছে।
+
+✅ তুমি চাইলে এগুলো ডাটাবেজ থেকে ডায়নামিক করতে পারো — বললে আমি তোমাকে PHP + MySQL দিয়ে ডাইনামিক হিরো স্লাইডার দেখিয়ে দিতে পারি।
+
+✅ Product Section:
+html
+Copy code
+<section class="product spad">...</section>
+এটি পুরো হোমপেজের প্রোডাক্ট/কনটেন্ট অংশ। এখানে কয়েকটি subsection আছে:
+
+🔹 Trending Now
+html
+Copy code
+<div class="trending__product">...</div>
+এখানে ট্রেন্ডিং এনিমে দেখানো হয়েছে।
+
+প্রতিটি .product__item এর ভিতরে ইমেজ, episode, comment count, views, category, নাম, ও ডিটেইলস লিংক আছে।
+
+ইমেজ data-setbg দিয়ে সেট করা হয়েছে।
+
+🔹 Adventure Shows, Recently Added, Live Action
+এগুলো সব একেকটা ক্যাটেগরি হিসেবে ব্যবহার করা হয়েছে, স্ট্যাটিক ডেটা দিয়ে।
+
+তুমি চাইলে নিচের মতো ডাইনামিক করতে পারো:
+
+php
+Copy code
+<?php
+$shows = $DB->query("SELECT * FROM shows WHERE category = 'adventure' LIMIT 6")->fetchAll();
+foreach ($shows as $show): ?>
+    <div class="product__item">
+        ...
+        <h5><a href="anime-details.php?id=<?= $show['id']; ?>"><?= $show['title']; ?></a></h5>
+    </div>
+<?php endforeach; ?>
+🔹 Sidebar Recommendations (For You)
+html
+Copy code
+<div class="product__sidebar__comment">...</div>
+ইউজারের জন্য সাজেস্ট করা এনিমে শো দেখানো হয়েছে (স্ট্যাটিকভাবে)।
+
+প্রতিটি রেকমেন্ডেশনে ইমেজ, নাম, ক্যাটাগরি ও ভিউ আছে।
+
+এই অংশটি ইউজারের ব্যাবহার অনুযায়ী ডাইনামিক করলে smart recommendation feature বানানো যাবে।
+
+✅ Footer Section
+php
+Copy code
+<?php require "includes/footer.php"; ?>
+🔹 এই লাইনে ফুটার অংশ আলাদা footer.php ফাইলে রাখা হয়েছে। এর মাধ্যমে পেজের নিচের JS গুলো, কপিরাইট, লিংক ইত্যাদি add হয়েছে।
+
+🧠 উন্নতির পরামর্শ (Pro Suggestions):
+কাজ	উন্নয়ন
+✅ ডেটা স্ট্যাটিক	→ ডাইনামিক (DB থেকে লোড) করো
+✅ img/...	→ <?php echo APPURL; ?>/img/... করো যেন রিলেটিভ path ভুল না হয়
+✅ product item	→ reusable PHP component বানাও (partial include)
+✅ URL	→ anime-details.php?id=12 এর মতো ডায়নামিক লিংক করো
+✅ comment count	→ সত্যিকারের কমেন্ট গোনো দেখাও (SQL COUNT)
+
+🗂 ১. ধরন: ডাটাবেজ টেবিল স্ট্রাকচার
+sql
+Copy code
+-- Table: sliders
+CREATE TABLE sliders (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    label VARCHAR(255),
+    title VARCHAR(255),
+    description TEXT,
+    image VARCHAR(255),
+    link VARCHAR(255)
+);
+
+-- Table: products
+CREATE TABLE products (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    section ENUM('trending', 'popular', 'recent', 'live', 'sidebar') NOT NULL,
+    title VARCHAR(255),
+    image VARCHAR(255),
+    episodes VARCHAR(20),
+    comment_count INT,
+    views INT,
+    tags VARCHAR(255),
+    link VARCHAR(255)
+);
+🛠 ২. PDO Config (db.php)
+php
+Copy code
+<?php
+$host = 'localhost';
+$db   = 'anime_db';
+$user = 'root';
+$pass = '';
+$charset = 'utf8mb4';
+
+$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+$options = [
+    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+];
+
+try {
+    $pdo = new PDO($dsn, $user, $pass, $options);
+} catch (\PDOException $e) {
+    die('Database connection failed: ' . $e->getMessage());
+}
+?>
+🖥️ ৩. সম্পূর্ণ রেডিমেড home.php
+php
+Copy code
+<?php require "includes/header.php"; require "includes/db.php"; ?>
+
+<!-- Hero Section Begin -->
+<section class="hero">
+    <div class="container">
+        <div class="hero__slider owl-carousel">
+            <?php
+            $stmt = $pdo->query("SELECT * FROM sliders ORDER BY id DESC");
+            while ($row = $stmt->fetch()):
+            ?>
+            <div class="hero__items set-bg" data-setbg="<?= $row['image'] ?>">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="hero__text">
+                            <div class="label"><?= htmlspecialchars($row['label']) ?></div>
+                            <h2><?= htmlspecialchars($row['title']) ?></h2>
+                            <p><?= htmlspecialchars($row['description']) ?></p>
+                            <a href="<?= $row['link'] ?>"><span>Watch Now</span> <i class="fa fa-angle-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php endwhile; ?>
+        </div>
+    </div>
+</section>
+<!-- Hero Section End -->
+
+<!-- Product Section Begin -->
+<section class="product spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+
+                <?php
+                $sections = ['trending' => 'Trending Now', 'popular' => 'Adventure Shows', 'recent' => 'Recently Added Shows', 'live' => 'Live Action'];
+
+                foreach ($sections as $key => $title):
+                ?>
+                <div class="<?= $key ?>__product">
+                    <div class="row">
+                        <div class="col-lg-8 col-md-8 col-sm-8">
+                            <div class="section-title"><h4><?= $title ?></h4></div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="btn__all">
+                                <a href="#" class="primary-btn">View All <span class="arrow_right"></span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <?php
+                    $stmt = $pdo->prepare("SELECT * FROM products WHERE section = ? ORDER BY id DESC LIMIT 6");
+                    $stmt->execute([$key]);
+                    while ($row = $stmt->fetch()):
+                    ?>
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <div class="product__item">
+                                <div class="product__item__pic set-bg" data-setbg="<?= $row['image'] ?>">
+                                    <div class="ep"><?= $row['episodes'] ?></div>
+                                    <div class="comment"><i class="fa fa-comments"></i> <?= $row['comment_count'] ?></div>
+                                    <div class="view"><i class="fa fa-eye"></i> <?= $row['views'] ?></div>
+                                </div>
+                                <div class="product__item__text">
+                                    <ul>
+                                        <?php foreach (explode(',', $row['tags']) as $tag): ?>
+                                            <li><?= trim($tag) ?></li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                    <h5><a href="<?= $row['link'] ?>"><?= htmlspecialchars($row['title']) ?></a></h5>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endwhile; ?>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+
+            </div>
+
+            <!-- Sidebar Section -->
+            <div class="col-lg-4 col-md-6 col-sm-8">
+                <div class="product__sidebar">
+                    <div class="product__sidebar__comment">
+                        <div class="section-title"><h5>For You</h5></div>
+                        <?php
+                        $stmt = $pdo->prepare("SELECT * FROM products WHERE section = 'sidebar' ORDER BY id DESC LIMIT 4");
+                        $stmt->execute();
+                        while ($row = $stmt->fetch()):
+                        ?>
+                        <div class="product__sidebar__comment__item">
+                            <div class="product__sidebar__comment__item__pic">
+                                <img src="<?= $row['image'] ?>" alt="">
+                            </div>
+                            <div class="product__sidebar__comment__item__text">
+                                <ul>
+                                    <?php foreach (explode(',', $row['tags']) as $tag): ?>
+                                        <li><?= trim($tag) ?></li>
+                                    <?php endforeach; ?>
+                                </ul>
+                                <h5><a href="<?= $row['link'] ?>"><?= htmlspecialchars($row['title']) ?></a></h5>
+                                <span><i class="fa fa-eye"></i> <?= $row['views'] ?> Views</span>
+                            </div>
+                        </div>
+                        <?php endwhile; ?>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- Product Section End -->
+
+<?php require "includes/footer.php"; ?>
+✅ সংক্ষেপে:
+sliders টেবিল → Hero slider
+
+products টেবিল → প্রতিটি সেকশন (trending, popular, recent, live, sidebar)
+
+ডাইনামিক কন্টেন্ট ফেচ করা হয়েছে PDO দিয়ে (prepare, execute, fetch)
+
+HTML/JS স্ট্রাকচার একই রাখা হয়েছে
+
+
