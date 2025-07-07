@@ -1,36 +1,21 @@
 <?php
 
-try {  
-     //host
-     define("HOST", "localhost");
+try {
+    // DB Constants
+    define("HOST", "localhost");
+    define("DBNAME", "anime");
+    define("USER", "root");
+    define("PASS", "");
 
-     //dbname
-     define("DBNAME", "anime");
+    // DSN with charset
+    $conn = new PDO("mysql:host=".HOST.";dbname=".DBNAME.";charset=utf8mb4", USER, PASS);
 
-     //user
-     define("USER", "root");
+    // Error Mode: Exception
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-     //pass
-     define("PASS", "");
+    // Optional: Connection test (for debug only)
+    // echo "Database connection successful";
 
-     $conn = new PDO("mysql:host=".HOST.";dbname=".DBNAME."", USER, PASS);
-     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-
-    //  if ($conn == true) {
-    //     echo "Database connection is a success!!";
-    //   } else {
-    //     echo "Database connection error!!";
-    // } 
-    
-    
-    } catch(PDOException $e) {
-       echo $e->getMessage();
-
-    }
-
-    
-
-      
-
-
+} catch (PDOException $e) {
+    echo "Database connection failed: " . $e->getMessage(); // log this in production instead
+}
