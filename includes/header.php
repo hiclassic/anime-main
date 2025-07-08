@@ -1,8 +1,11 @@
 <?php
 
- define ("APPURL", "http://localhost/anime-main");
+session_start();
+define("APPURL", "http://localhost/anime-main");
 
-?><!DOCTYPE html>
+?>
+
+<!DOCTYPE html>
 <html lang="zxx">
 
 <head>
@@ -16,7 +19,7 @@
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800;900&display=swap"
-    rel="stylesheet">
+        rel="stylesheet">
 
     <!-- Css Styles -->
     <link rel="stylesheet" href="<?php echo APPURL; ?>/css/bootstrap.min.css" type="text/css">
@@ -52,35 +55,41 @@
                     <div class="header__nav">
                         <nav class="header__menu mobile-menu">
                             <ul>
-                                <li><a href="./index.html">Homepage</a></li>
-                                <li><a href="./categories.html">Categories <span class="arrow_carrot-down"></span></a>
+                                <li><a href="./index.php">Homepage</a></li>
+                                <li><a href="./categories.php">Categories <span class="arrow_carrot-down"></span></a>
                                     <ul class="dropdown">
-                                        <li><a href="./categories.html">Magic</a></li>
+                                        <li><a href="./categories.html">Action</a></li>
                                         <li><a href="./categories.html">Drama</a></li>
                                         <li><a href="./categories.html">Adventure</a></li>
-                                        <li><a href="./categories.html">Action</a></li>
-                                        <li><a href="./categories.html">Romance</a></li>
-                                        <li><a href="./categories.html">Horror</a></li>
-                                        <li><a href="./categories.html">Comedy</a></li>
-                                        <li><a href="./categories.html">Sci-Fi</a></li>
-                                        <li><a href="./categories.html">Mystery</a></li>
-                                        <li><a href="./categories.html">Fantasy</a></li>
-                                        <li><a href="./categories.html">Supernatural</a></li>
-                                        <li><a href="./categories.html">Thriller</a></li>
-                                        <li><a href="./categories.html">Historical</a></li>
-                                        <li><a href="./categories.html">Sports</a></li>
-                                        
+
                                     </ul>
                                 </li>
-                               
+                                <?php if (isset($_SESSION['username'])) : ?>
+                                <li> <a href="#"><?php echo $_SESSION['username']; ?><span class="arrow_carrot-down"></span></a>
+                                    <ul class="dropdown">
+                                        <li><a href="./categories.html">Action</a></li>
+                                        <li><a href="./categories.html">Drama</a></li>
+                                        <li><a href="<?php echo APPURL; ?>/auth/logout.php">Logout</a></li>
+
+                                    </ul>
+                                </li>
+                                <?php endif; ?>
+                                    
                             </ul>
                         </nav>
                     </div>
                 </div>
                 <div class="col-lg-2">
                     <div class="header__right">
-                        <a href="#" class="search-switch"><span class="icon_search"></span></a>
-                        <a href="./login.html"><span class="icon_profile"></span></a>
+                         <a href="#" class="search-switch"><span class="icon_search"></span></a>
+                        <?php if (!isset($_SESSION['username'])) : ?>
+                           
+                            <a href="./login.php"><span class="icon_profile"></span></a>
+
+
+
+
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
