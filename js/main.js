@@ -34,10 +34,26 @@
     /*------------------
         Background Set
     --------------------*/
+$(document).ready(function () {
+    // Owl Carousel Init
+    $(".hero__slider").owlCarousel({
+        items: 1,
+        loop: true,
+        nav: true,
+        dots: true,
+        autoplay: true,
+        smartSpeed: 1200,
+        autoplayTimeout: 5000
+    });
+
+    // Background set (after DOM + carousel ready)
     $('.set-bg').each(function () {
         var bg = $(this).data('setbg');
         $(this).css('background-image', 'url(' + bg + ')');
     });
+});
+
+
 
     // Search model
     $('.search-switch').on('click', function () {

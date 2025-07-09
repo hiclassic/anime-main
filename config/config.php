@@ -1,5 +1,6 @@
 <?php
-
+// Database connection
+// MySQLi or PDO
 try {
     // DB Constants
     define("HOST", "localhost");
