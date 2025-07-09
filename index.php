@@ -2,6 +2,15 @@
 require "includes/header.php";
 ?>
 
+<?php
+session_start();
+if (!isset($_SESSION['username'])) {
+    header("Location: http://localhost/anime-main/auth/login.php");
+    exit;
+}
+?>
+
+
 
     <!-- Hero Section Begin -->
     <section class="hero">
