@@ -46,7 +46,7 @@ define("APPURL", "http://localhost/anime-main");
             <div class="row">
                 <div class="col-lg-2">
                     <div class="header__logo">
-                        <a href="./index.html">
+                        <a href="<?php echo APPURL; ?>">
                             <img src="img/logo.png" alt="">
                         </a>
                     </div>
@@ -55,7 +55,7 @@ define("APPURL", "http://localhost/anime-main");
                     <div class="header__nav">
                         <nav class="header__menu mobile-menu">
                             <ul>
-                                <li><a href="./index.php">Homepage</a></li>
+                                <li><a href="<?php echo APPURL; ?>">Homepage</a></li>
                                 <li><a href="./categories.php">Categories <span class="arrow_carrot-down"></span></a>
                                     <ul class="dropdown">
                                         <li><a href="./categories.html">Action</a></li>
@@ -84,7 +84,7 @@ define("APPURL", "http://localhost/anime-main");
                          <a href="#" class="search-switch"><span class="icon_search"></span></a>
                         <?php if (!isset($_SESSION['username'])) : ?>
                            
-                            <a href="./login.php"><span class="icon_profile"></span></a>
+                            <a href="<?php echo APPURL; ?>/auth./login.php"><span class="icon_profile"></span></a>
 
 
 

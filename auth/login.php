@@ -3,9 +3,16 @@ session_start(); // SESSION must be started first
 require __DIR__ . "/../includes/header.php";
 require __DIR__ . "/../config/config.php";
 
+
+if (isset($_SESSION['username'])) {
+    header("Location: " . APPURL . "");
+    exit;
+}
+
 if (!defined('APPURL')) {
     define('APPURL', 'http://localhost/anime-main'); // change as needed
 }
+
 
 $error = "";
 

@@ -2,6 +2,11 @@
 require __DIR__ . "/../includes/header.php";
 require __DIR__ . "/../config/config.php";
 
+if (isset($_SESSION['username'])) {
+    header("Location: " . APPURL . "");
+    exit;
+}
+
 if (isset($_POST['submit'])) {
     // Basic input validation
     $email = trim($_POST['email'] ?? '');
