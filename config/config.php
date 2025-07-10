@@ -8,6 +8,12 @@ try {
     define("USER", "root");
     define("PASS", "");
 
+    // Make sure APPURL is defined only once
+    if (!defined('APPURL')) {
+        define("APPURL", "http://localhost/anime-main");
+    }
+
+
     // DSN with charset
     $conn = new PDO("mysql:host=".HOST.";dbname=".DBNAME.";charset=utf8mb4", USER, PASS);
 
